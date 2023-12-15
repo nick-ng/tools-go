@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"strconv"
 	"tools-go/jira"
@@ -42,22 +40,6 @@ func main() {
 			}
 		}
 	}
-
-	res, err := http.Get("https://nick.ng")
-
-	if err != nil {
-		fmt.Printf("error making request: %s\n", err)
-		return
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-
-	if err != nil {
-		fmt.Printf("error making request: %s\n", err)
-		return
-	}
-
-	fmt.Println("Response: ", string(resBody))
 }
 
 func readFlags(args []string) flagOptions {
@@ -76,8 +58,10 @@ func readFlags(args []string) flagOptions {
 		}
 	}
 
-	fmt.Println("Invalid flags")
+	fmt.Println("invalid flags")
 	fmt.Println("usage: jira resource-type resource-id [action]")
+	fmt.Println("instead, got:")
+	fmt.Println(args)
 	os.Exit(1)
 
 	return flagOptions{}
