@@ -22,9 +22,9 @@ type flagOptions struct {
 func main() {
 	flags := readFlags(os.Args)
 
-	fmt.Println(os.Args)
-	fmt.Println(os.Args[1])
-	fmt.Println(flags)
+	// fmt.Println(os.Args)
+	// fmt.Println(os.Args[1])
+	// fmt.Println(flags)
 
 	if flags.resource == "board" {
 		sprintAdjustment, err := strconv.Atoi(flags.subAction)
@@ -68,7 +68,7 @@ func readFlags(args []string) flagOptions {
 }
 
 func readBoardFlags(args []string) flagOptions {
-	fmt.Println(args)
+	// fmt.Println(args)
 	if len(args) < 3 {
 		return flagOptions{}
 	}
