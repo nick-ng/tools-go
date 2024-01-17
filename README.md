@@ -10,4 +10,4 @@ I still don't like Jira's web client.
 
 ### ToDo Comments
 
-- jira/functions.go:229: @todo(nick-ng): cache sprints?
+- jira/functions.go:234: @todo(nick-ng): cache sprints?

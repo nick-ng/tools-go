@@ -77,7 +77,7 @@ func init() {
 	jiraUrl = os.Getenv("JIRA_URL")
 	atlassianUser = os.Getenv("ATLASSIAN_USER")
 	atlassianApiToken = os.Getenv("ATLASSIAN_API_TOKEN")
-	limit = 100
+	limit = 50
 }
 
 func request(method string, url string, body io.Reader) (*http.Response, error) {
@@ -102,6 +102,11 @@ func Get(url string) (*http.Response, error) {
 	return request("GET", url, nil)
 }
 
+// This function gets a the current sprint from the given boardId.
+// If a sprintAdjustment is provided, instead gives the sprint that corresponds
+// to the adjustment from the current sprint.
+//
+// Usage: GetJiraBoard("45", -2)
 func GetJiraBoard(boardId string, sprintAdjustment int) {
 	sprints := getJiraSprints(boardId)
 
@@ -230,14 +235,12 @@ func GetJiraBoard(boardId string, sprintAdjustment int) {
 func getJiraSprints(boardId string) []Sprint {
 	sprints := []Sprint{}
 
-	chunkSize := 50
 	isLast := false
 	urlPattern := "%s/rest/agile/1.0/board/%s/sprint?startAt=%d&maxResults=%d"
 
 	start := 0
-
 	for !isLast {
-		url := fmt.Sprintf(urlPattern, jiraUrl, boardId, start, chunkSize)
+		url := fmt.Sprintf(urlPattern, jiraUrl, boardId, start, limit)
 
 		res, err := Get(url)
 
