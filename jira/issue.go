@@ -10,14 +10,44 @@ import (
 )
 
 type Issue struct {
+	Key    string      `json:"key"`
 	Fields IssueFields `json:"fields"`
 }
 
 type IssueFields struct {
 	Description IssueDescription `json:"description"`
+	Assignee    Assignee         `json:"assignee"`
+	Status      Status           `json:"status"`
+	Comment     CommentField     `json:"comment"`
 }
 
 type IssueDescription struct {
+	Content []Content `json:"content"`
+}
+
+type Assignee struct {
+	DisplayName string `json:"displayName"`
+}
+
+type Status struct {
+	Name string `json:"name"`
+}
+
+type CommentField struct {
+	Comments []Comment `json:"comments"`
+	Total    int       `json:"total"`
+}
+
+type Comment struct {
+	Author CommentAuthor `json:"author"`
+	Body   CommentBody   `json:"body"`
+}
+
+type CommentAuthor struct {
+	DisplayName string `json:"displayName"`
+}
+
+type CommentBody struct {
 	Content []Content `json:"content"`
 }
 
@@ -40,7 +70,9 @@ func GetJiraIssue(issueId string) {
 		os.Exit(1)
 	}
 
-	utils.WriteBytesDebug(fmt.Sprintf("issueBody-%s.json", issueId), resBody)
+	filename := fmt.Sprintf("issueBody-%s.json", strings.ToUpper(issueId))
+
+	utils.WriteBytesDebug(filename, resBody)
 
 	var issue Issue
 
@@ -50,7 +82,7 @@ func GetJiraIssue(issueId string) {
 		fmt.Println("cannot unmarshal issue resBody", err)
 	}
 
-	output := ContentToString(issue.Fields.Description.Content, "")
+	content := ContentToString(issue.Fields.Description.Content, "")
 
-	fmt.Println(output)
+	fmt.Println(content)
 }

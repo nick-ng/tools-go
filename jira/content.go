@@ -14,6 +14,7 @@ type Content struct {
 	Marks   []Mark    `json:"marks"`
 }
 
+// @todo(nick-ng): figure out how to handle bulletlists
 func ContentToString(contents []Content, input string) string {
 	temp := input
 

@@ -22,4 +22,6 @@ I still don't like Jira's web client.
 
 ### ToDo Comments
 
+- jira/board.go:144: @todo(nick-ng): cache sprints?
+- jira/content.go:17: @todo(nick-ng): figure out how to handle bulletlists
 - main.go:110: @todo(nick-ng): have some way of storing a "current issue" so you don't have to remember the issue id
